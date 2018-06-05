@@ -28,11 +28,19 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               {% if user.is_authenticated %}
-              <ul class="nav navbar-nav navbar-right">
+              <ul class="nav navbar-nav navbar-left">
+
                 <li class="active"><a href="/account/">Home <span class="sr-only">(current)</span></a></li>
-                <!-- <li class=""><a href="/account/profile/">Profile</a></li> -->
+                <li class=""><a href="#">Profile</a></li>
+                <li class=""><a href="#">About Us</a></li>
+                
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
                 <li class=""><a href="/account/logout">Logout</a></li>
               </ul>
+              
+
                {% else %}
                  <ul class="nav navbar-nav navbar-right">
                  <li class=""><a href="/account/login">Login</a></li>
@@ -55,6 +63,7 @@
     <div class='container'>  
     {% block body %}
       <h1>Base</h1>
+
     {% endblock %}
     </div>
 

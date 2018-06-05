@@ -3,7 +3,29 @@
     {% block head %}
     <title>{{ user }}</title>
     {% endblock %}
+
   <body>
     {% block body%}
   <h1>{{ user }}!</h1>
+
+  <form method="GET" action=''>
+  	  <input type="text" placeholder='Search Student' name="q" />
+ 	  <input type="submit" name="Submit">
+
+  </form>
+
+  <br/>
+
+  <h1>List of Students</h1>
+  <hr>
+  {% for student in students %}
+  <h4><li>{{ student }} {{ student.surname }} <a href="#">Update</a> | <a href="#">Delete</a><br/></li></h4>
+  {% endfor %}
+
+{% for q in query %}
+<h4><li>{{ q }}   <a href="#">Update</a> | <a href="#">Delete</a><br/></li></h4>
+{% endfor %}
+
     {% endblock %}
+
+
