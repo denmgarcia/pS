@@ -8,24 +8,63 @@
     {% block body%}
   <h1>{{ user }}!</h1>
 
-  <form method="GET" action=''>
-  	  <input type="text" placeholder='Search Student' name="q" />
- 	  <input type="submit" name="Submit">
 
-  </form>
+
+
+
+
+
+
 
   <br/>
 
   <h1>List of Students</h1>
   <hr>
+  {% if user.is_authenticated %}
+  <button><a href="{% url 'create' %}">Create New Student</a></button>
+
+  <ul class="nav navbar-nav navbar-right">
+
+  <form method="GET" action="" >
+
+      <input type="text" placeholder='Search Student' name="q" />
+
+    <input type="submit" name="Submit">
+
+
+
+  </form>
+
+
+    </ul>
+
+  <hr>
+
+  
+
+  {% if  user %}
   {% for student in students %}
-  <h4><li>{{ student }} {{ student.surname }} <a href="#">Update</a> | <a href="#">Delete</a><br/></li></h4>
+  <h4><li>{{ student }} {{ student.surname }} <a href="{% url 'update' student.id %}">Update</a> | <a href="{% url 'delete' student.id %}">Delete</a><br/></li></h4>
+  {% endfor %}
+  {% endif %}
+<br/>
+
+<hr>
+  {% for q in query %}
+  <h4><ul><li>{{ q }} {{ q.surname }}  <br/></li></ul></h4>
   {% endfor %}
 
-{% for q in query %}
-<h4><li>{{ q }}   <a href="#">Update</a> | <a href="#">Delete</a><br/></li></h4>
-{% endfor %}
+
+
+  {% else %}
+  
+  <h4><li>You need to login first</h4>
+
+  {% endif %}
 
     {% endblock %}
+
+
+
 
 
