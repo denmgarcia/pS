@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
+from accounts.models import Student
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -27,3 +30,7 @@ def save(self, commit=True):
         user.save()
     return user
 
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ('name','midname','surname','address','phone')
