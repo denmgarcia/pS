@@ -1,21 +1,17 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/workaround.css' %}">
     {% block head %}
 
     <title>Base</title>
     {% endblock %}
   </head>
   <body>
-    <body>
-
-      <div class="container">
-<br>
-        <!-- Static navbar -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -24,48 +20,42 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">Training</a>
+              <a class="navbar-brand" href="{% url 'login_redirect'%}">Training</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-              {% if user.is_authenticated %}
+              {% if  not user.is_authenticated %}
               <ul class="nav navbar-nav navbar-left">
 
-                <li class="active"><a href="/account/">Home <span class="sr-only">(current)</span></a></li>
-                <li class=""><a href="{% url 'profile'%}">Profile</a></li>
-                <li class=""><a href="{% url 'about' %}">About Us</a></li>
+              <li class="active"><a href="/account/">HOME <span class="sr-only">(current)</span></a></li>
+              <li class=""><a href="{% url 'news' %}"> NEWS</a></li>
+              <li class=""><a href="{% url 'about' %}"> CONTACT US</a></li>
                 
               </ul>
 
-              <ul class="nav navbar-nav navbar-right">
-                <li class=""><a href="/account/logout">Logout</a></li>
-              </ul>
-              
+<ul class="nav navbar-nav navbar-right">
+<li class="active"><a href="/account/login"><span class="glyphicon glyphicon-log-in"></span> LOGIN</a></li>
+<li class=""><a href="{% url 'register'%}"> SIGNUP <span class="glyphicon glyphicon-plus"></a></li>
+{% else %}
+<ul class="nav navbar-nav navbar-right">
+<li class=""><a href="{% url 'profile'%}">STUDENT PROFILE</a></li>
+<li class=""><a href=""><span class="glyphicon glyphicon-user"></span> {{ user.first_name | upper }}</a></li>
+<li class=""><a href="/account/logout">LOGOUT <span class="glyphicon glyphicon-log-out"></span></a></li>
 
-               {% else %}
-                 <ul class="nav navbar-nav navbar-right">
-                 <li class=""><a href="/account/login">Login</a></li>
-                <li class="active"><a href="{% url 'register'%}">Register <span class="sr-only">(current)</span></a></li>
+</ul>
+</ul>
+{% endif %}
 
-                   </ul>
-               </ul>
-               {% endif %}
-
-            </div><!--/.nav-collapse -->
-          </div><!--/.container-fluid -->
-        </nav>
-
-        <!-- Main component for a primary marketing message or call to action -->
+</div><!--/.nav-collapse -->
+</div><!--/.container-fluid -->
+</nav>
 
 
-      </div> <!-- /container -->
-
-    </body>
-    <div class='container'>  
+<body>
+<div class='container'>  
     {% block body %}
-      <h1>Base</h1>
 
     {% endblock %}
-    </div>
+</div>
 
 
   </body>

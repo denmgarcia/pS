@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+    {% block head %}
+    <title>About Us</title>
+    {% endblock %}
+
+{%block body%}
+<p>
+<center><h2><strong>{{ news.headline }}</strong></h2></center>
+<center><h5>Author: {{ news.author }}</h5></center>
+<center><h6>Date: {{ news.pub_date }}</h6></center>
+</p>
+
+{{ news.body }}
+
+
+{% endblock %}

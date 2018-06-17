@@ -10,3 +10,12 @@ class Student(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class News(models.Model):
+	headline = models.CharField(max_length=40, default='')
+	author = models.CharField(max_length=40, default='')
+	pub_date = models.DateTimeField('date published')
+	body = models.TextField()
+
+	def __str__(self):
+		return self.headline
