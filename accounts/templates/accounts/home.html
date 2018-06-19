@@ -1,54 +1,63 @@
 {% extends 'base.html' %}
 <h1>Home</h1>
     {% block head %}
-    <title>{{ user }}</title>
+    <title>Welcome</title>
     {% endblock %}
 
   <body>
     {% block body%}
-  <br/>
-
-  <h1>List of Students</h1>
-  <hr>
+  
   {% if user.is_authenticated %}
-  <button><a href="{% url 'create' %}">Create New Student</a></button>
 
-  <ul class="nav navbar-nav navbar-right">
+    <form action="{% url 'create' %}">
+      <button>Add student</button>
+    </form>
 
-  <form method="GET" action="" >
+ <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-      <input type="text" placeholder='Search Student' name="q" />
-
-    <input type="submit" name="Submit">
-
-
-
-  </form>
+  
+ <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
 
-    </ul>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
 
-  <hr>
+        <img src="https://www.w3schools.com/bootstrap/ny.jpg" alt="New York" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>School</h3>
+          <p>The atmosphere in school is fun.</p>
+        </div>      
+      </div>
+    </div>
+</body>
 
   
 
-  {% if  user %}
-  {% for student in students %}
-  <h4><li>{{ student }} {{ student.surname }} <a href="{% url 'update' student.id %}">Update</a> | <a href="{% url 'delete' student.id %}">Delete</a><br/></li></h4>
-  {% endfor %}
-  {% endif %}
-<br/>
 
-<hr>
-  {% for q in query %}
-  <h4><ul><li>{{ q }} {{ q.surname }}  <br/></li></ul></h4>
-  {% endfor %}
+
 
 
 
   {% else %}
+  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+
   
-  <h4><li>You need to login first</h4>
+ <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="https://www.w3schools.com/bootstrap/ny.jpg" alt="New York" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>School</h3>
+          <p>The atmosphere in school is fun.</p>
+        </div>      
+      </div>
+    </div>
+</body>
+
 
   {% endif %}
 

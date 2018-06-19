@@ -5,7 +5,7 @@ class Student(models.Model):
 	name = models.CharField(max_length=50, default='')
 	midname = models.CharField(max_length=50, default='')
 	surname = models.CharField(max_length=50,default='')
-	address = models.CharField(max_length=100, default='')
+	address = models.TextField(max_length=100)
 	phone = models.CharField(max_length=100, default='')
 
 	def __str__(self):
@@ -19,3 +19,4 @@ class News(models.Model):
 
 	def __str__(self):
 		return self.headline
+
