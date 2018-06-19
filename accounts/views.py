@@ -11,6 +11,13 @@ from django.contrib.auth.views import logout
 def index(request):
   return render(request, "accounts/home.html")
 
+def users(request):
+  users = User.objects.all()
+  context = {
+    "users" : users,
+  }
+  return render(request, "accounts/users.html", context)
+
 
 def news(request):
   news = News.objects.all()
@@ -41,7 +48,11 @@ def register(request):
 
 
 def login_redirect(request):
-    return redirect('/account/login')
+    if User.is_authenticated:
+      return redirect('/account/login')
+    else:
+      logout(request)
+      redirect('/account/home.html')
 
 def create(request):
 

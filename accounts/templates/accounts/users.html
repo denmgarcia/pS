@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+    {% block head %}
+    <title>Users</title>
+    {% endblock %}
+
+{%block body%}
+<h3>Users</h3>
+<hr>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email Address</th>
+        <th>is_staff</th>
+        <th>Last Login</th>
+        <th>Date Joined</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for users in users %}
+      <tr>
+        <td>{{ users }}</td>
+        <td>{{ users.first_name }}</td>
+        <td>{{ users.last_name }}</td>
+        <td>{{ users.email }}</td>
+        <td>{{ users.is_staff }}</td>
+        <td>{{ users.last_login }}</td>
+        <td>{{ users.date_joined }}</td>
+
+
+      </tr>
+      <tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
