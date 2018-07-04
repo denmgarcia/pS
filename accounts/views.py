@@ -3,13 +3,17 @@ from accounts.forms import RegistrationForm, StudentForm
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from accounts.models import Student, News
+from accounts.models import AddressBook, News
 from django.contrib.auth.views import logout
 
 
 
 def index(request):
-  return render(request, "accounts/home.html")
+  address_book = AddressBook.objects.all()
+  context = {
+    "students": address_book,
+  }
+  return render(request, "accounts/home.html",context)
 
 def users(request):
   users = User.objects.all()
@@ -65,7 +69,7 @@ def create(request):
 
 
 def update(request,id):
-  edit = Student.objects.get(id=id)
+  edit = AddressBook.objects.get(id=id)
   form = StudentForm(request.POST or None, instance = edit)
   if form.is_valid():
     student = form.save()
@@ -74,17 +78,24 @@ def update(request,id):
   return render(request, 'accounts/edit.html', {'form': form, 'edit': edit})
 
 def delete(request,id):
-  erase = Student.objects.get(id=id)
-  erase.delete()
-  return redirect('/account/profile')
+  if request.user.is_staff:
+    erase = AddressBook.objects.get(id=id)
+    erase.delete()
+    return redirect('/account/profile')
+  else:
+    context = {
+      "msg": "You are not admin or staff"
+    }
+    return render(request, 'accounts/reminder.html', context)
 
 def about(request):
   return render(request, 'accounts/about.html')
 
 def profile(request):
-  students = Student.objects.all()
-  context = {
-    "students": students,
+  address_book = AddressBook.objects.all()
+  if request.user:
+    context = {
+    "students": address_book,
   }
   return render(request, 'accounts/profile.html',context)
 
@@ -99,3 +110,18 @@ def news_detail(request,id):
 def logout_views(request):
   logout(request)
   return redirect('/')
+
+def confirm(request, id):
+  confirm = AddressBook.objects.get(id=id)
+  context = {
+    "confirm": confirm
+  }
+  return render(request, 'accounts/confirm_delete.html',context)
+
+def confirm_edit(request,id):
+  confirm = AddressBook.objects.get(id=id)
+  context = {
+    "confirm": confirm
+  }
+  return render(request, 'accounts/confirm_update.html',context)
+

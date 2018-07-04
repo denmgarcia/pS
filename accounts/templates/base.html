@@ -37,8 +37,8 @@
 <li class=""><a href="{% url 'register'%}"> SIGNUP <span class="glyphicon glyphicon-plus"></a></li>
 {% else %}
 <ul class="nav navbar-nav navbar-right">
-<li class=""><a href="{% url 'profile'%}">STUDENT PROFILE</a></li>
-<li class=""><a href="/account/users">USERS</a></li> 
+<li class=""><a href="{% url 'profile' %}">ADDRESS BOOK</a></li>
+<li class=""><a href="/account/users"></a></li> 
 <li class=""><a href="#"><span class="glyphicon glyphicon-user"></span> {{ user.first_name | upper }}</a></li>
 <li class=""><a href="/account/logout">LOGOUT <span class="glyphicon glyphicon-log-out"></span></a></li>
 
