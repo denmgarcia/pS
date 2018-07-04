@@ -24,7 +24,7 @@ urlpatterns = [
     path('<int:id>/delete/', views.delete, name='delete'),
     path('<int:id>/edit/', views.update, name='update'),
     path('<int:id>/confirm/', views.confirm, name='confirm'),
-    #path('<int:id>/update/', views.confirm, name='confirm'),
+    path('<int:id>/confirm_edit/', views.confirm_edit, name='confirm_edit'),
 
 
     

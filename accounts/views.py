@@ -78,16 +78,23 @@ def update(request,id):
   return render(request, 'accounts/edit.html', {'form': form, 'edit': edit})
 
 def delete(request,id):
-  erase = AddressBook.objects.get(id=id)
-  erase.delete()
-  return redirect('/account/profile')
+  if request.user.is_staff:
+    erase = AddressBook.objects.get(id=id)
+    erase.delete()
+    return redirect('/account/profile')
+  else:
+    context = {
+      "msg": "You are not admin or staff"
+    }
+    return render(request, 'accounts/reminder.html', context)
 
 def about(request):
   return render(request, 'accounts/about.html')
 
 def profile(request):
   address_book = AddressBook.objects.all()
-  context = {
+  if request.user:
+    context = {
     "students": address_book,
   }
   return render(request, 'accounts/profile.html',context)
@@ -117,3 +124,4 @@ def confirm_edit(request,id):
     "confirm": confirm
   }
   return render(request, 'accounts/confirm_update.html',context)
+
