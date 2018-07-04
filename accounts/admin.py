@@ -1,6 +1,4 @@
 from django.contrib import admin
-from accounts.models import Student, News
+from accounts.models import AddressBook
 # Register your models here.
-admin.site.register(Student)
-
-admin.site.register(News)
+admin.site.register(AddressBook)
