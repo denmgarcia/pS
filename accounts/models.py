@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class AddressBook(models.Model):
 	first_name = models.CharField(max_length=50, default='')
 	last_name = models.CharField(max_length=50,default='')
@@ -12,7 +11,7 @@ class AddressBook(models.Model):
 
 class News(models.Model):
 	headline = models.CharField(max_length=40, default='')
-	author = models.CharField(max_length=40, default='')
+	author = models.CharField(max_length=50, default='')
 	pub_date = models.DateTimeField('date published')
 	body = models.TextField()
 
