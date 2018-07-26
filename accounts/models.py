@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+
 
 
 class AddressBook(models.Model):
@@ -12,7 +15,7 @@ class AddressBook(models.Model):
 
 class News(models.Model):
 	headline = models.CharField(max_length=40, default='')
-	author = models.CharField(max_length=40, default='')
+	author = models.CharField(max_length=50, default='')
 	pub_date = models.DateTimeField('date published')
 	body = models.TextField()
 

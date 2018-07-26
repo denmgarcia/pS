@@ -12,6 +12,9 @@ class AddressBooksAdmin(admin.ModelAdmin):
 
 	)
 
+	list_filter = (list_display)
+
+
 class NewsAdmin(admin.ModelAdmin):
 	class Meta:
 		fields = News
@@ -20,6 +23,8 @@ class NewsAdmin(admin.ModelAdmin):
 	list_display = [
 		'headline', 'author', 'pub_date','body',
 	]
+	list_filter = ('headline', 'author', 'pub_date',)
+	ordering = ('-pub_date',)
 
 
 admin.site.register(AddressBook, AddressBooksAdmin)
