@@ -6,6 +6,8 @@ from django.contrib.auth.views import (
     logout
 )
 
+
+
 urlpatterns = [
     path('', views.index),
     path('s/', views.login_redirect, name='login_redirect'),
@@ -18,8 +20,13 @@ urlpatterns = [
     path('search/', views.search, name='search'),  
     path('news/', views.news, name='news'),
     path('news/<int:id>/', views.news_detail, name='detail'),
-    
+    #path('users/', views.users),
     path('<int:id>/delete/', views.delete, name='delete'),
     path('<int:id>/edit/', views.update, name='update'),
+    path('<int:id>/confirm/', views.confirm, name='confirm'),
+    path('<int:id>/confirm_edit/', views.confirm_edit, name='confirm_edit'),
+
+
+    
 
 ]

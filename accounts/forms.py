@@ -2,13 +2,13 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
-from accounts.models import Student
+from accounts.models import AddressBook
 
 
 class StudentForm(forms.ModelForm):
     class Meta:
-        model = Student
-        fields = ('name','midname','surname','address','phone')
+        model = AddressBook
+        fields = ('first_name','last_name','phone','address')
 
 
 from django.contrib.auth.forms import AuthenticationForm
