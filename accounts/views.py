@@ -16,13 +16,6 @@ class IndexView(View):
     }
     return render(request, "accounts/home.html",context)
 
-def users(request):
-  users = User.objects.all()
-  context = {
-    "users" : users,
-  }
-  return render(request, "accounts/users.html", context)
-
 class NewsView(View):
   def get(self,request):
     news = News.objects.all()
@@ -53,8 +46,8 @@ class RegisterView(View):
       form.save()
       return redirect('/account/login')
 
-
-def login_redirect(request):
+class LoginRedirect(View):
+  def get(self, request, *args, **kwargs):
     if User.is_authenticated:
       return redirect('/account/login')
     else:
@@ -75,29 +68,38 @@ class CreateView(View):
       form.save()
       return redirect('/account')
 
+class UpdateView(View):
+  form_class = StudentForm
+  template_name = 'accounts/edit.html'
 
-def update(request,id):
-  edit = AddressBook.objects.get(id=id)
-  form = StudentForm(request.POST or None, instance = edit)
-  if form.is_valid():
-    student = form.save()
-    return redirect('/account/profile')
+  def post(self,request,id, *args, **kwargs):
+    edit = AddressBook.objects.get(id=id)
+    form = StudentForm(request.POST or None, instance = edit)
+    if form.is_valid():
+      form.save()
+      return redirect('/account/profile')
 
-  return render(request, 'accounts/edit.html', {'form': form, 'edit': edit})
+  def get(self,request,id, *args, **kwargs):
+    edit = AddressBook.objects.get(id=id)
+    form = self.form_class(instance = edit)
+    return render(request, self.template_name, {'form': form, 'edit':  edit})
 
-def delete(request,id):
-  if request.user.is_staff:
-    erase = AddressBook.objects.get(id=id)
-    erase.delete()
-    return redirect('/account/profile')
-  else:
-    context = {
+class DeleteView(View):
+  def get(self,request,id, *args, **kwargs):
+
+    if request.user.is_staff:
+      erase = AddressBook.objects.get(id=id)
+      erase.delete()
+      return redirect('/account/profile')
+    else:
+      context = {
       "msg": "You are not admin or staff"
     }
     return render(request, 'accounts/reminder.html', context)
 
-def about(request):
-  return render(request, 'accounts/about.html')
+class AboutView(View):
+  def get(self, request):
+    return render(request, 'accounts/about.html')
 
 class ProfileView(View):
   def get(self,request):
@@ -108,29 +110,33 @@ class ProfileView(View):
       }
       return render(request, 'accounts/profile.html',context)
 
-def news_detail(request,id):
-  news = News.objects.get(id=id)
-  context = {
-     "news": news,
-  }
+class NewsDetailView(View):
+  def get(self, request, id):
+    news = News.objects.get(id = id)
+    context = {
+      "news": news,
+    }
+    return render(request, 'accounts/news_detail.html', context)
 
-  return render(request, 'accounts/news_detail.html', context)
+class LogoutView(View):
+  def get(self,request):
+    logout(request)
+    return redirect('/')
 
-def logout_views(request):
-  logout(request)
-  return redirect('/')
 
-def confirm(request, id):
-  confirm = AddressBook.objects.get(id=id)
-  context = {
+class ConfirmView(View):
+  def get(self,request,id, *args, **kwargs):
+    confirm = AddressBook.objects.get(id=id)
+    context = {
     "confirm": confirm
-  }
-  return render(request, 'accounts/confirm_delete.html',context)
+    }
+    return render(request, 'accounts/confirm_delete.html',context)
 
-def confirm_edit(request,id):
-  confirm = AddressBook.objects.get(id=id)
-  context = {
+
+class ConfirmEdit(View):
+  def get(self,request,id, *args, **kwargs):
+    confirm = AddressBook.objects.get(id=id)
+    context = {
     "confirm": confirm
-  }
-  return render(request, 'accounts/confirm_update.html',context)
-
+    }
+    return render(request, 'accounts/confirm_update.html',context)
