@@ -5,15 +5,16 @@ from django.db import models
 from django.db.models import Q
 from accounts.models import AddressBook, News
 from django.contrib.auth.views import logout
+from django.views import View
 
 
-
-def index(request):
-  address_book = AddressBook.objects.all()
-  context = {
+class IndexView(View):
+  def get(self,request):
+    address_book = AddressBook.objects.all()
+    context = {
     "students": address_book,
-  }
-  return render(request, "accounts/home.html",context)
+    }
+    return render(request, "accounts/home.html",context)
 
 def users(request):
   users = User.objects.all()
@@ -22,33 +23,35 @@ def users(request):
   }
   return render(request, "accounts/users.html", context)
 
+class NewsView(View):
+  def get(self,request):
+    news = News.objects.all()
+    context = { "news" : news,}
+    return render(request, 'accounts/news.html', context)
 
-def news(request):
-  news = News.objects.all()
-  context = { "news" : news,}
-  return render(request, 'accounts/news.html', context)
-
-
-def search(request):
+class SearchView(View):
+  def get(self,request):
     q = request.GET.get("q")
     if q:
-      qS = Student.objects.filter(Q(name__icontains = q) | Q(surname__icontains = q))
-      print(qS)
+      qS = AddressBook.objects.filter(Q(first_name__icontains = q) | Q(last_name__icontains = q))
       context = {
         "search" : qS,
       }
       return render(request, "accounts/search.html",context)
 
-def register(request):
-    if request.method == 'POST':
-       form = RegistrationForm(request.POST)
-       if form.is_valid():
-           form.save()
-           return redirect('/account/login')
-    else:
-      form = RegistrationForm()
-    args = {'form': form }
-    return render(request, 'accounts/reg_form.html', args)
+class RegisterView(View):
+  form_class = RegistrationForm
+  template_name = 'accounts/reg_form.html'
+
+  def get(self, request, *args, **kwargs):
+    form = self.form_class()
+    return render(request, self.template_name, {'form': form})
+
+  def post(self, request, *args, **kwargs):
+    form = self.form_class(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect('/account/login')
 
 
 def login_redirect(request):
@@ -58,14 +61,19 @@ def login_redirect(request):
       logout(request)
       redirect('/account/home.html')
 
-def create(request):
+class CreateView(View):
+  form_class = StudentForm
+  template_name = 'accounts/new.html'
 
-  form = StudentForm(request.POST or None)
-  if form.is_valid():
-    student = form.save()
-    return redirect('/account')
+  def get(self, request, *args, **kwargs):
+    form = self.form_class()
+    return render(request, self.template_name, {'form': form})
 
-  return render(request, 'accounts/new.html', {'form': form})
+  def post(self, request, *args, **kwargs):
+    form =self.form_class(request.POST or None)
+    if form.is_valid():
+      form.save()
+      return redirect('/account')
 
 
 def update(request,id):
@@ -91,13 +99,14 @@ def delete(request,id):
 def about(request):
   return render(request, 'accounts/about.html')
 
-def profile(request):
-  address_book = AddressBook.objects.all()
-  if request.user:
-    context = {
-    "students": address_book,
-  }
-  return render(request, 'accounts/profile.html',context)
+class ProfileView(View):
+  def get(self,request):
+    address_book = AddressBook.objects.all()
+    if request.user:
+      context = {
+      "students": address_book,
+      }
+      return render(request, 'accounts/profile.html',context)
 
 def news_detail(request,id):
   news = News.objects.get(id=id)

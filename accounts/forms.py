@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
 from accounts.models import AddressBook
 
@@ -9,12 +9,7 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = AddressBook
         fields = ('first_name','last_name','phone','address')
-
-
-from django.contrib.auth.forms import AuthenticationForm
-from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+        
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control", "placeholder": "Username", "required":"autofocus"})) 
