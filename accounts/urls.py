@@ -5,25 +5,9 @@ from django.contrib.auth.views import (
     login,
     logout
 )
-from .views import (
-IndexView,
-NewsView,
-SearchView,
-RegisterView,
-ProfileView,
-CreateView,
-ConfirmView,
-ConfirmEdit,
-LoginRedirect,
-DeleteView,
-NewsDetailView,
-LogoutView,
-AboutView,
-)
-
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     path('s/', views.LoginRedirect.as_view(), name='login_redirect'),
     path('login/',login, {'authentication_form':LoginForm}, name="login"),
     path('logout/',views.LogoutView.as_view(), name='logout'),
