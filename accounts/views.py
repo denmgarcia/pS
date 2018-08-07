@@ -36,18 +36,18 @@ class RegisterView(View):
   form_class = RegistrationForm
   template_name = 'accounts/reg_form.html'
 
-  def get(self, request, *args, **kwargs):
+  def get(self, request):
     form = self.form_class()
     return render(request, self.template_name, {'form': form})
 
-  def post(self, request, *args, **kwargs):
+  def post(self, request):
     form = self.form_class(request.POST)
     if form.is_valid():
       form.save()
       return redirect('/account/login')
 
 class LoginRedirect(View):
-  def get(self, request, *args, **kwargs):
+  def get(self, request):
     if User.is_authenticated:
       return redirect('/account/login')
     else:
@@ -58,11 +58,11 @@ class CreateView(View):
   form_class = StudentForm
   template_name = 'accounts/new.html'
 
-  def get(self, request, *args, **kwargs):
+  def get(self, request):
     form = self.form_class()
     return render(request, self.template_name, {'form': form})
 
-  def post(self, request, *args, **kwargs):
+  def post(self, request):
     form =self.form_class(request.POST or None)
     if form.is_valid():
       form.save()
@@ -72,20 +72,20 @@ class UpdateView(View):
   form_class = StudentForm
   template_name = 'accounts/edit.html'
 
-  def post(self,request,id, *args, **kwargs):
+  def post(self,request,id):
     edit = AddressBook.objects.get(id=id)
     form = StudentForm(request.POST or None, instance = edit)
     if form.is_valid():
       form.save()
       return redirect('/account/profile')
 
-  def get(self,request,id, *args, **kwargs):
+  def get(self,request,id):
     edit = AddressBook.objects.get(id=id)
     form = self.form_class(instance = edit)
     return render(request, self.template_name, {'form': form, 'edit':  edit})
 
 class DeleteView(View):
-  def get(self,request,id, *args, **kwargs):
+  def get(self,request):
 
     if request.user.is_staff:
       erase = AddressBook.objects.get(id=id)
@@ -123,18 +123,16 @@ class LogoutView(View):
     logout(request)
     return redirect('/')
 
-
 class ConfirmView(View):
-  def get(self,request,id, *args, **kwargs):
+  def get(self,request,id):
     confirm = AddressBook.objects.get(id=id)
     context = {
     "confirm": confirm
     }
     return render(request, 'accounts/confirm_delete.html',context)
 
-
 class ConfirmEdit(View):
-  def get(self,request,id, *args, **kwargs):
+  def get(self,request,id):
     confirm = AddressBook.objects.get(id=id)
     context = {
     "confirm": confirm
