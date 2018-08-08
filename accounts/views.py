@@ -89,7 +89,7 @@ class UpdateView(View):
 
 
 class DeleteView(View):
-    def get(self, request):
+    def get(self, request, id):
         if request.user.is_staff:
             erase = AddressBook.objects.get(id=id)
             erase.delete()
