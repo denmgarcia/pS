@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+    {% block head %}
+    <title>Edit</title>
+    {% endblock %}
+
+{%block body%}
+ <h1>Update</h1>
+<hr>
+  <form method="post">
+    {% csrf_token %}
+   
+   <div><h5><b>First Name:</b></h5>{{ form.first_name }}</div>
+   <div><h5><b>Surname:</b></h5>{{ form.last_name }}</div>
+      <div><h5><b>Contact Number:</b></h5>{{ form.phone }}</div>
+   <div><h5><b>Address</b></h5>{{ form.address }}</div>
+   <br>
+   
+
+    <button type="submit">Update</button>
+  </form>
+
+{% endblock %}

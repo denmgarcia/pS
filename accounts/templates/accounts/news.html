@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+    {% block head %}
+    <title>News</title>
+    {% endblock %}
+
+{%block body %}
+<div id="band" class="text-center">
+  <h3>NEWS</h3>
+
+  <div class="row">
+  	{% for news in news %}
+    <div class="col-sm-4">
+      <p class="text-center"><strong><h5 style="font-size: 18px"><a href="{{news.id}}">{{news}}</a></h5></strong></p>
+   <p class="text-center"><strong><h6>{{news.author}} on {{news.pub_date}}</h6></strong></p>
+      <br>
+      <a href="{{news.id}}" data-toggle="collapse">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"" class="img-circle person" alt="Random Name" width="255" height="255">
+      </a>
+
+
+
+
+    </div>
+    {% endfor %}
+  </div>
+
+
+
+
+
+{% endblock %}

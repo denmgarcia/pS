@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{%block body%}
+<title>Login</title>
+<div class="container">
+
+{% if form.errors %}
+<div class="alert alert-danger alert-dismissible">
+       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong> Username or Password is incorrect. Please try again!</strong>
+    </div>
+{% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.username }}<br><br>
+    {{ form.password }}<br><br>
+    <button type="submit">Login</button>
+  </form>
+</div>
+{% endblock %}
