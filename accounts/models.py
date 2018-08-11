@@ -17,5 +17,8 @@ class News(models.Model):
     pub_date = models.DateTimeField('date published')
     body = models.TextField()
 
+    class Meta:
+        verbose_name = "New"
+
     def __str__(self):
         return self.headline
