@@ -4,7 +4,6 @@ pipelines:
   default:
     - step:
         caches:
-          - pip
+          - docker
         script:
-          - (cd /home/denmark/django/final/pS)
           - pip install -r requirements.txt
